@@ -1,0 +1,24 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes" controller="SignaturePadOAuthCtrl">
+
+<ltng:require scripts="{!$Resource.signaturePad}" afterScriptsLoaded="{!c.doInit}" />
+<aura:attribute name='showCanvas' default='false' type='boolean' />
+
+<aura:method name="SaveSignature" action="{!c.saveSignatureOnClick}" description="Save Signature" />
+
+<aura:method name="IsCanvasEmpty" action="{!c.IsCanvasEmpty}" description="Check Signature is done or not" />
+
+<!-- Id of the Parent record for which this signature pad will be saved -->
+<aura:attribute name="recordId" type="Id" />
+
+<aura:attribute name="IsImageDrawn" type="Boolean" default="false" />
+<aura:attribute name="signaturePad" type="Object" />
+
+<div class="slds slds-grid slds-wrap">
+<div class="slds-size--1-of-1 slds-m-top--small slds-p-right--small">
+
+<canvas id="signature-pad" aura:id="signature-pad" class="{!v.showCanvas ? ' signature-pad ' : ' signature-pad canvasWrapper' }" style='border: 1px solid #dedede;margin: 5px auto;margin-left: 10px;'></canvas>
+<canvas id='blank' aura:id="blank" class="{!v.showCanvas ? ' signature-pad ' : ' signature-pad canvasWrapper' }" style='display:none;border: 1px solid #dedede;margin: 5px auto;'></canvas>
+    <lightning:buttonIcon class="" iconName="utility:clear" variant="bare" alternativeText="Clear" iconClass="dark" onclick="{!c.clearSignatureOnClick}"/>
+</div>
+</div>
+</aura:component>

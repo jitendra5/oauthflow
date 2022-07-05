@@ -1,0 +1,43 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name='truthy' default= 'false' type='boolean'/>
+    <aura:attribute name='redirect' default='https://ctmsdemo-dev-ed.lightning.force.com/lightning/n/OAuthFlow' type='String' />
+    <aura:attribute name="clientId" type="String" default="3MVG95jctIhbyCpoMWwZyl6tgpocHks3E_lfgZrvcN0au_E1ZXQ55C.S2byVRsRHQ1DY9bBfpdbdPE7J_inRl" />
+    <aura:attribute name="redirectURL" type="String"  default="https://ctmsdemo-dev-ed.lightning.force.com/lightning/n/OAuthFlow" />
+    <aura:attribute name="state" type="String" default='mystate' />
+    <aura:attribute name="iframeUrl" type="String" default= "https://login.salesforce.com/services/oauth2/authorize?" />
+
+
+    <aura:attribute name="width" type="String" />
+    <aura:attribute name="height" type="String" />
+    <aura:attribute name="scrolling" type="String" />
+    <aura:attribute name="frameBorder" type="String" />
+    <aura:attribute name="style" type="String" />
+    <aura:attribute name="sandbox" type="String" />
+    <aura:attribute name="token" type="String" />
+    <aura:attribute name="username" type="String" />
+    
+    <aura:if isTrue="{!v.truthy}">
+        <lightning:card title="Authentication">
+            <aura:set attribute="actions">
+                <lightning:button label="Logout" onclick='{!c.performLogout}'/>
+            </aura:set>
+            <p class="slds-p-horizontal_small" style='display:flex;align-items: baseline;justify-content: center;'>
+                <p> Hello <b>{!v.username}</b>, Login successful!! <br/> Please provide signature.</p>
+                <c:SignaturePadOAuth aura:id="SignaturePad1" showCanvas='true'></c:SignaturePadOAuth>
+            </p>
+            <lightning:button class='ml' label="Save" iconName="utility:save" iconPosition="left"  variant="brand" onclick="{!c.saveSignature}" />
+        </lightning:card>
+        
+        <aura:set attribute="else">
+            <lightning:card title="Authentication">
+                <p class="slds-p-horizontal_small" style='display:flex;align-items: baseline;justify-content: center;'>
+                    
+                    <lightning:button label="Login with Salesforce" iconName="utility:salesforce1" iconPosition="left"  variant="brand" onclick="{!c.redirectToPage}" />
+                    <c:SignaturePadOAuth aura:id="SignaturePad2" showCanvas='false'></c:SignaturePadOAuth>
+                </p>
+                 <p style='text-align: center;font-weight: bold;'> Login to provide signature.</p>
+            </lightning:card>
+        </aura:set>
+    </aura:if> 
+</aura:component>
